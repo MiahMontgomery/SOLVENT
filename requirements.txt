@@ -1,4 +1,6 @@
 browser-use
 fastapi
 langchain-ollama
+langchain-openai
+playwright
 uvicorn[standard]
