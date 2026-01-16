@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: #121212;
+  color: #dfff00;
+  font-family: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.chrome-logo {
+  background: linear-gradient(135deg, #f7f9ff 0%, #b7c3ff 45%, #f5f7ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 18px rgba(164, 201, 255, 0.35);
+}
+
+.bubble-shell {
+  background: radial-gradient(circle at 30% 30%, rgba(180, 130, 255, 0.35), transparent 50%),
+    radial-gradient(circle at 70% 70%, rgba(120, 255, 210, 0.25), transparent 55%),
+    rgba(20, 20, 20, 0.6);
+  border: 1px solid rgba(200, 200, 255, 0.2);
+  box-shadow: 0 0 45px rgba(124, 168, 255, 0.15);
+}
+
+.code-stream {
+  font-family: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  color: rgba(223, 255, 0, 0.75);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.blur-mask {
+  backdrop-filter: blur(12px);
+}
