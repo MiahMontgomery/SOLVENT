@@ -1,0 +1,4 @@
+browser-use
+fastapi
+langchain-ollama
+uvicorn[standard]
