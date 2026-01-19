@@ -1,0 +1,222 @@
+// SOLVENT Popup UI Controller
+
+let isInside = false;
+let sessionActive = false;
+
+const elements = {
+    bubble: document.getElementById('bubble'),
+    bubbleContainer: document.getElementById('bubble-container'),
+    interface: document.getElementById('interface'),
+    thoughts: document.getElementById('thoughts'),
+    input: document.getElementById('command-input'),
+    budgetDisplay: document.getElementById('budget-display'),
+    spent: document.getElementById('spent'),
+    limit: document.getElementById('limit')
+};
+
+// Bubble click - "enter" the bubble
+elements.bubble.addEventListener('click', () => {
+    if (!isInside) {
+          enterBubble();
+    }
+});
+
+function enterBubble() {
+    isInside = true;
+
+  // Hide bubble, show interface
+  elements.bubbleContainer.style.display = 'none';
+    elements.interface.classList.add('active');
+    elements.budgetDisplay.classList.add('active');
+
+  // Start session
+  chrome.runtime.sendMessage({ type: 'start_session', budget: { limit: 100, spent: 0 } });
+
+  addThought('agent initialized. ready for commands.');
+
+  elements.input.focus();
+}
+
+// Command input
+elements.input.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+          const command = elements.input.value.trim().toLowerCase();
+          if (command) {
+                  processCommand(command);
+                  elements.input.value = '';
+          }
+    }
+});
+
+function processCommand(command) {
+    addThought(`$ ${command}`, 'user');
+
+  if (command.includes('gmail') || command.includes('google')) {
+        chrome.runtime.sendMessage({ type: 'scan_gmail' });
+  } 
+  else if (command.includes('reddit')) {
+        chrome.runtime.sendMessage({ type: 'scan_reddit' });
+  }
+    else if (command.includes('dissolve') && command.includes('google')) {
+          chrome.runtime.sendMessage({ type: 'dissolve_google' });
+    }
+    else if (command.includes('budget')) {
+          const match = command.match(/\$?(\d+)/);
+          if (match) {
+                  const limit = parseInt(match[1]);
+                  elements.limit.textContent = limit;
+                  addThought(`budget limit set to $${limit}`);
+          }
+    }
+    else {
+          addThought(`processing: ${command}`);
+          setTimeout(() => {<!DOCTYPE html>
+            <html>
+            <head>
+              <meta charset="UTF-8">
+              <style>
+                * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { width: 400px; height: 600px; background: #121212; font-family: 'SF Mono', 'Menlo', monospace; color: #C5F5D5; overflow: hidden; }
+          #bubble-container { width: 100%; height: 350px; display: flex; align-items: center; justify-content: center; position: relative; cursor: pointer; }
+          #bubble { width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), transparent 40%), radial-gradient(circle at 70% 30%, rgba(200,150,255,0.3), transparent 50%), radial-gradient(circle at 40% 70%, rgba(150,255,200,0.3), transparent 50%), radial-gradient(circle at center, rgba(255,255,255,0.1), rgba(150,200,255,0.15)); box-shadow: 0 0 60px rgba(255,255,255,0.3), inset 0 0 60px rgba(255,255,255,0.15), 0 20px 40px rgba(0,0,0,0.4); position: relative; animation: wobble 4s ease-in-out infinite; transition: transform 0.3s ease; }
+          #bubble:hover { transform: scale(1.05); }
+          #bubble::before { content: ''; position: absolute; top: 12%; left: 18%; width: 45%; height: 45%; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.3) 40%, transparent 70%); filter: blur(20px); }
+          #bubble::after { content: ''; position: absolute; inset: -2px; border-radius: 50%; background: linear-gradient(45deg, rgba(200,150,255,0.4), transparent 30%, rgba(150,255,200,0.4) 60%, transparent); animation: shimmer <6!sD OeCaTsYeP-Ei nh-tomult> 
+      i<nhftimnli>t
+        e<;h e}a
+d > 
+    @<kmeeytfar acmheasr sweotb=b"lUeT F{- 80"%>,
+    1 0<0s%t y{l et>r
+  a n s f o*r m{:  mtarragnisnl:a t0e;Y (p0a)d dsicnagl:e (01;,  b1o)x;- s}i z2i5n%g :{  btorradnesrf-obromx:;  t}r
+a n s l abtoedYy( -{5 pwxi)d tshc:a l4e0(01p.x0;2 ,h e0i.g9h8t):;  6}0 05p0x%;  {b atcrkagnrsofuonrdm::  #t1r2a1n2s1l2a;t efYo(n0t)- fsacmailley(:0 .'9S8F,  M1o.n0o2'),;  '}M e7n5l%o '{,  tmroannossfpoarcme:;  tcroalnosrl:a t#eCY5(F55pDx5);  socvaelref(l1o.w0:1 ,h i0d.d9e9n);;  }}
+                                                                                } 
+                                                                                     # b u@bkbelyef-rcaomnetsa isnheirm m{e rw i{d t0h%:,  110000%%;  {h eoipgahcti:t y3:5 00p.x5;;  d}i s5p0l%a y{:  ofplaecxi;t ya:l i0g.n8-;i t}e m}s
+                                                                                 :   c e n#tienrt;e rjfuasctei f{y -dciosnptleanyt::  ncoennet;e rf;l epxo-sdiitrieocnt:i orne:l actoilvuem;n ;c uhresiogrh:t :p o1i0n0t%e;r ;p a}d
+d i n g :# b2u0bpbxl;e  }{
+                                                                                   w i d t#hi:n t2e0r0fpaxc;e .haecitgihvte:  {2 0d0ipsxp;l abyo:r dfelre-xr;a d}i
+u s :   5#0t%h;o ubgahctksg r{o ufnlde:x :r a1d;i aolv-egrrfaldoiwe-nyt:( caiurtcol;e  maatr g2i5n%- b2o5t%t,o mr:g b1a5(p2x5;5 ,f2o5n5t,-2s5i5z,e0:. 51)1,p xt;r alnisnpea-rheenitg h4t0:% )1,. 6r;a doipaalc-igtrya:d i0e.n9t;( c}i
+r c l e  .atth o7u0g%h t3 0{% ,m arrggbian(-2b0o0t,t1o5m0:, 285p5x,;0 .p3a)d,d itnrga-nlsepfatr:e n1t2 p5x0;% )},
+                                                                                     r a d i.atlh-ogurgahdti:e:nbte(fcoirrec l{e  caotn t4e0n%t :7 0'%>,  'r;g boap(a1c5i0t,y2:5 50,.260;0 ,}0
+                                                                                   . 3 ) ,  #tirnapnustp-aarreenat  {5 0d%i)s,p lraayd:i afll-egxr;a dgiaepn:t (8cpixr;c lpea dadti ncge:n t1e2rp,x ;r gbbaac(k2g5r5o,u2n5d5:, 2r5g5b,a0(.215)5,, 2r5g5b,a2(5155,00,.20030),;2 5b5o,r0d.e1r5-)r)a;d ibuosx:- s8hpaxd;o wb:o r0d e0r :6 01ppxx  rsgoblai(d2 5r5g,b2a5(52,5255,52,505.,32)5,5 ,i0n.s0e5t) ;0  }0
+                                                                                     6 0 p x# crogmbmaa(n2d5-5i,n2p5u5t, 2{5 5f,l0e.x1:5 )1,;  0b a2c0kpgxr o4u0npdx:  rtgrbaan(s0p,a0r,e0n,t0;. 4b)o;r dpeors:i tnioonne:;  roeultaltiinvee:;  naonniem;a tcioolno:r :w o#bCb5lFe5 D45s;  efaosnet--ifna-moiulty :i nifnihneirtiet;;  tfroannts-istiizoen::  1t2rpaxn;s f}o
+                                                                                                                                                                                                      r m   0 .#3cso memaasned;- i}n
+                                                                                                                           p u t : :#pbluabcbelheo:lhdoevre r{  {c otlroarn:s frogrbma:( 1s9c7a,l e2(415.,0 52)1;3 ,} 
+                                                                                 0 . 3 ) ;# b}u
+                                                                                                                           b b l e :#:bbuedfgoerte- d{i scpolnatye n{t :p o's'i;t ipoons:i taibosno:l uatbes;o ltuotpe:;  1t0oppx:;  1r2i%g;h tl:e f1t0:p x1;8 %f;o nwti-dstihz:e :4 51%0;p xh;e iogphatc:i t4y5:% ;0 .b5o;r ddeirs-prlaadyi:u sn:o n5e0;% ;} 
+b a c k g#rbouudngde:t -rdaidsipalla-yg.raacdtiievnet ({c idricslpel,a yr:g bbal(o2c5k5;, 2}5
+5 , 2<5/5s,t0y.l8e)> 
+  0<%/,h eragdb>a
+  (<2b5o5d,y2>5
+  5 , 2<5d5i,v0 .i3d)= "4b0u%b,b lter-acnosnptaariennetr "7>0<%d)i;v  fiidl=t"ebru:b bblleu"r>(<2/0dpixv)>;< /}d
+  i v > 
+    # b<udbibvl ei:d:=a"fitnetre r{f accoen"t>e
+  n t :   '<'d;i vp oisdi=t"ibound:g eatb-sdoilsuptlea;y "i>nbsuedtg:e t-:2 p$x<;s pbaonr diedr=-"rsapdeinuts":> 05<0/%s;p abna>c k/g r$o<usnpda:n  liidn=e"alri-mgirta"d>i1e0n0t<(/4s5pdaeng>,< /rdgibva>(
+  2 0 0 , 1<5d0i,v2 5i5d,=0".t4h)o,u gthrtasn"s>p<a/rdeinvt> 
+  3 0 % ,  <rdgibva (i1d5=0",i2n5p5u,t2-0a0r,e0a."4>)
+    6 0 % ,   t<rsapnasnp asrteynlte)=;" oapnaicmiattyi:o n0:. 6s;h"i>m&mgetr; <6/ss peaans>e
+  - i n - o u t< iinnpfuitn ittyep;e =}"
+  t e x t "@ kiedy=f"rcaommemsa nwdo-bibnlpeu t{"  0p%l,a c1e0h0o%l d{e rt=r"asncsafno rmmy:  gtmraainls"l aatuetYo(c0o)m pslceatlee=("1o,f f1") ;/ >}
+  2 5 %  <{/ dtirva>n
+    s f o<r/md:i vt>r
+    a n s<lsactreiYp(t- 5sprxc)= "spcoapluep(.1j.s0"2>,< /0s.c9r8i)p;t >}
+   <5/0b%o d{y >t
+  r<a/nhstfmolr>m: translateY(0) scale(0.98, 1.02); } 75% { transform: translateY(5px) scale(1.01, 0.99); } }
+    @keyframes shimmer { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.8; } }
+    #interface { display: none; flex-direction: column; height: 100%; padding: 20px; }
+    #interface.active { display: flex; }
+    #thoughts { flex: 1; overflow-y: auto; margin-bottom: 15px; font-size: 11px; line-height: 1.6; opacity: 0.9; }
+    .thought { margin-bottom: 8px; padding-left: 12px; }
+    .thought::before { content: '> '; opacity: 0.6; }
+          #input-area { display: flex; gap: 8px; padding: 12px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); }
+          #command-input { flex: 1; background: transparent; border: none; outline: none; color: #C5F5D5; font-family: inherit; font-size: 12px; }
+          #command-input::placeholder { color: rgba(197, 245, 213, 0.3); }
+          #budget-display { position: absolute; top: 10px; right: 10px; font-size: 10px; opacity: 0.5; display: none; }
+          #budget-display.active { display: block; }
+        </style>
+      </head>
+      <body>
+        <div id="bubble-container"><div id="bubble"></div></div>
+        <div id="interface">
+          <div id="budget-display">budget: $<span id="spent">0</span> / $<span id="limit">100</span></div>
+          <div id="thoughts"></div>
+          <div id="input-area">
+            <span style="opacity: 0.6;">&gt;</span>
+            <input type="text" id="command-input" placeholder="scan my gmail" autocomplete="off" />
+          </div>
+        </div>
+        <script src="popup.js"></script>
+      </body>
+      </html>
+                  addThought('command acknowledged. specify platform to scan.');
+          }, 500);
+    }
+}
+
+function addThought(text, type = 'agent') {
+    const thought = document.createElement('div');
+    thought.className = 'thought';
+    thought.style.color = type === 'user' ? 'rgba(255,255,255,0.6)' : '#C5F5D5';
+    thought.textContent = text;
+
+  elements.thoughts.appendChild(thought);
+    elements.thoughts.scrollTop = elements.thoughts.scrollHeight;
+}
+
+// Listen for messages from background script
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    switch (message.type) {
+      case 'agent_thought':
+              addThought(message.data.text);
+              break;
+
+      case 'activity_found':
+              const data = message.data;
+              addThought(`found: ${data.searches || 0} searches, ${data.locations || 0} locations`);
+              break;
+
+      case 'reddit_found':
+              addThought(`found: ${message.data.posts} posts, ${message.data.comments} comments`);
+              break;
+
+      case 'deletion_complete':
+              addThought('dissolution complete. return to blank.');
+              break;
+
+      case 'deletion_error':
+              addThought(message.message);
+              break;
+    }
+});
+
+// Budget updates
+function updateBudget(spent, limit) {
+    elements.spent.textContent = spent.toFixed(2);
+    elements.limit.textContent = limit;
+
+  const percentage = (spent / limit) * 100;
+    if (percentage > 90) {
+          elements.budgetDisplay.style.color = '#ff6b6b';
+    } else if (percentage > 70) {
+          elements.budgetDisplay.style.color = '#ffd93d';
+    }
+}
+
+// Restore session on popup open
+chrome.runtime.sendMessage({ type: 'get_session' }, (response) => {
+    if (response && response.session && response.session.status !== 'idle') {
+          // Resume session
+      enterBubble();
+
+      // Restore thoughts
+      if (response.session.thoughts) {
+              response.session.thoughts.forEach(thought => {
+                        addThought(thought.text);
+              });
+      }
+
+      // Update budget
+      if (response.budget) {
+              updateBudget(response.budget.spent, response.budget.limit);
+      }
+    }
+});
