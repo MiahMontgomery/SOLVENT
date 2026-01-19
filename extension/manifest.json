@@ -1,43 +1,42 @@
 {
-        "manifest_version": 3,
+          "manifest_version": 3,
           "name": "SOLVENT",
-            "description": "Return to blank. AI-powered identity scrubber.",
-              "version": "1.0.0",
-                "action": {
-                    "default_popup": "popup.html"
-                      },
-                        "background": {
-                            "service_worker": "background.js",
-                                "type": "module"
-                                  },
-                                    "content_scripts": [
-                                        {
-                                              "matches": [
-                                                      "https://myactivity.google.com/*",
-                                                              "https://www.reddit.com/*",
-                                                                      "https://www.instagram.com/*"
-                                                                            ],
-                                                                                  "js": ["content.js"],
-                                                                                        "run_at": "document_idle"
-                                                                                            }
-                                                                                              ],
-                                                                                                "permissions": [
-                                                                                                    "tabs",
-                                                                                                        "storage",
-                                                                                                            "activeTab",
-                                                                                                                "scripting"
-                                                                                                                  ],
-                                                                                                                    "host_permissions": [
-                                                                                                                        "https://myactivity.google.com/*",
-                                                                                                                            "https://www.reddit.com/*",
-                                                                                                                                "https://www.instagram.com/*",
-                                                                                                                                    "https://accounts.google.com/*"
-                                                                                                                                      ],
-                                                                                                                                        "web_accessible_resources": [
-                                                                                                                                            {
-                                                                                                                                                  "resources": ["assets/*"],
-                                                                                                                                                        "matches": ["<all_urls>"]
-                                                                                                                                                            }
-                                                                                                                                                              ]
-                                                                                                                                                              }
+          "description": "Return to blank. AI-powered identity scrubber.",
+          "version": "1.0.0",
+          "action": {
+                      "default_popup": "popup.html"
+          },
+          "background": {
+                      "service_worker": "background.js",
+                      "type": "module"
+          },
+          "content_scripts": [
+                      {
+                                    "matches": [
+                                                    "https://myactivity.google.com/*",
+                                                    "https://www.reddit.com/*",
+                                                    "https://www.instagram.com/*"
+                                    ],
+                                    "js": ["content.js"],
+                                    "run_at": "document_idle"
+                      }
+          ],
+          "permissions": [
+                      "tabs",
+                      "storage",
+                      "activeTab",
+                      "scripting"
+          ],
+          "host_permissions": [
+                      "https://myactivity.google.com/*",
+                      "https://www.reddit.com/*",
+                      "https://www.instagram.com/*",
+                      "https://accounts.google.com/*"
+          ],
+          "web_accessible_resources": [
+                      {
+                                    "resources": ["assets/*"],
+                                    "matches": ["<all_urls>"]
+                      }
+          ]
 }
